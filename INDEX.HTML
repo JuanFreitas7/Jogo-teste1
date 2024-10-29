@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click Game</title>
+</head>
+<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; font-family: Arial, sans-serif;">
+
+  <!-- Container do jogo -->  
+  <div id="game-container" style="position: relative; width: 300px; height: 300px; border: 1px solid #333;">
+    <div id="circle" style="position: absolute; width: 50px; height: 50px; background-color: red; border-radius: 50%; cursor: pointer;"></div>
+  </div>
+
+  <!-- Exibição da pontuação -->
+  <div id="score" style="margin-top: 20px; font-size: 1.5rem;">Pontuação: 0</div>
+
+  <script>
+    // Seleciona o círculo e o container do jogo
+    const circle = document.getElementById('circle');
+    const gameContainer = document.getElementById('game-container');
+    const scoreDisplay = document.getElementById('score');
+
+    let score = 0;
+    let gameActive = true;
+
+    // Função para mover o círculo para uma posição aleatória
+    function moveCircle() {
+      const maxX = gameContainer.clientWidth - circle.offsetWidth;
+      const maxY = gameContainer.clientHeight - circle.offsetHeight;
+      
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      // Define a posição aleatória do círculo
+      circle.style.left = `${randomX}px`;
+      circle.style.top = `${randomY}px`;
+    }
+
+    // Função para atualizar a pontuação
+    function updateScore() {
+      if (gameActive) {
+        score++;
+        scoreDisplay.textContent = `Pontuação: ${score}`;
+        moveCircle();
+      }
+    }
+
+    // Função para terminar o jogo
+    function endGame() {
+      gameActive = false;
+      alert(`Fim de jogo! Pontuação final: ${score}`);
+    }
+
+    // Evento de clique no círculo
+    circle.addEventListener('click', updateScore);
+
+    // Inicia o movimento do círculo ao carregar a página
+    window.onload = () => {
+      moveCircle();  // Move o círculo inicialmente
+      setTimeout(endGame, 10000);  // Termina o jogo após 10 segundos
+    };
+  </script>
+</body>
+</html>
